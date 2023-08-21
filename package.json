@@ -12,6 +12,7 @@
   "author": "Дарья Рутц",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
     "helmet": "^7.0.0",
     "mongoose": "^7.4.3",
