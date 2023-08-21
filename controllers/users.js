@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const { generateToken } = require('../utils/token');
 const { OK, CREATED, CONFLICT } = require('../utils/statusCodes');
 const {
   userNotFoundErrorMessage,
@@ -21,7 +22,7 @@ const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new NotFoundError(userNotFoundErrorMessage);
+        throw new Error();
       }
       res.status(OK).send({ user });
     })
@@ -84,8 +85,37 @@ const createUser = (req, res, next) => {
   });
 };
 
+const signin = (req, res, next) => {
+  const { email, password } = req.body;
+
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = generateToken({ _id: user._id });
+
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: true,
+        })
+        .send({ _id: user._id });
+    })
+    .catch(next);
+};
+
+const signout = (req, res, next) => {
+  res.clearCookie('jwt');
+  if (res.status(OK)) {
+    res.send({ message: 'Вы вышли из аккаунта.' });
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   getUser,
   updateUser,
   createUser,
+  signin,
+  signout,
 };

@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+const UnauthorizedError = require('../errors/UnauthorizedError');
+const { authenticationErrorMessage } = require('../errors/messages');
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,5 +29,23 @@ const userSchema = new mongoose.Schema(
   },
   { versionKey: false },
 );
+
+userSchema.statics.findUserByCredentials = function (email, password) {
+  return this.findOne({ email })
+    .select('+password')
+    .then((user) => {
+      if (!user) {
+        throw new UnauthorizedError(authenticationErrorMessage);
+      }
+
+      return bcrypt.compare(password, user.password).then((matched) => {
+        if (!matched) {
+          throw new UnauthorizedError(authenticationErrorMessage);
+        }
+
+        return user;
+      });
+    });
+};
 
 module.exports = mongoose.model('user', userSchema);
