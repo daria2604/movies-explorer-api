@@ -15,6 +15,6 @@
 `npm run dev` — запускает сервер с hot-reload
 
 ## Ссылки
-Репозиторий https://github.com/daria2604/movies-explorer-api
-IP 130.193.38.48
-Backend https://api.movies.dvr.nomoredomainsicu.ru/
+Репозиторий https://github.com/daria2604/movies-explorer-api  
+IP 130.193.38.48  
+Backend https://api.movies.dvr.nomoredomainsicu.ru/  
