@@ -22,11 +22,10 @@ const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        throw new Error();
+        throw new NotFoundError(userNotFoundErrorMessage);
       }
       res.status(OK).send({ user });
     })
-
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError(userBadRequestErrorMessage));
@@ -48,9 +47,11 @@ const updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(userUpdateValidationErrorMessage));
-      } else {
-        next(err);
       }
+      if (err.code === CONFLICT) {
+        next(new ConflictError(conflictErrorMessage));
+      }
+      next(err);
     });
 };
 

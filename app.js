@@ -22,14 +22,12 @@ app.use(cookieParser());
 app.post('/signin', signInValidation, signin);
 app.post('/signup', signUpValidation, createUser);
 app.use(auth);
-app.post('/signout', signout);
 app.use('/users', users);
 app.use('/movies', movies);
+app.post('/signout', signout);
 
 mongoose.connect(DB_URL);
 
 app.use(errors());
 app.use(error);
-app.listen(PORT, () => {
-  console.log(`App runs on port ${PORT}`);
-});
+app.listen(PORT);

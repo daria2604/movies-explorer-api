@@ -3,9 +3,8 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const { checkToken } = require('../utils/token');
 
 module.exports = (req, res, next) => {
-  if (!req.cookies) {
+  if (!req.cookies.jwt) {
     next(new UnauthorizedError(authorizationErrorMessage));
-    return;
   }
 
   const token = req.cookies.jwt;

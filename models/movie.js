@@ -28,7 +28,7 @@ const movieSchema = new mongoose.Schema(
       required: true,
       validate: urlValidation,
     },
-    trailerLink: {
+    trailer: {
       type: String,
       required: true,
       validate: urlValidation,
@@ -38,6 +38,14 @@ const movieSchema = new mongoose.Schema(
       required: true,
       validate: urlValidation,
     },
+    nameRU: {
+      type: String,
+      required: [true, 'Введите название фильма на русском языке.'],
+    },
+    nameEN: {
+      type: String,
+      required: [true, 'Введите название фильма на английском языке.'],
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
@@ -45,14 +53,6 @@ const movieSchema = new mongoose.Schema(
     },
     movieId: {
       type: Number,
-      required: true,
-    },
-    nameRU: {
-      type: String,
-      required: true,
-    },
-    nameEN: {
-      type: String,
       required: true,
     },
   },

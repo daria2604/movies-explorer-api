@@ -14,7 +14,7 @@ const getMovies = (req, res, next) => {
   const owner = req.user._id;
 
   Movie.find({ owner })
-    .then((movies) => res.send(movies))
+    .then((movies) => res.status(OK).send(movies))
     .catch(next);
 };
 
@@ -36,11 +36,9 @@ const deleteMovie = (req, res, next) => {
       if (!movie) {
         throw new NotFoundError(movieNotFoundErrorMessage);
       }
-
       if (movie.owner.toString() !== req.user._id) {
         throw new ForbiddenError(forbiddenErrorMessage);
       }
-
       return Movie.deleteOne({ _id: req.params.movieId });
     })
     .then((myMovie) => {
