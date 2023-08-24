@@ -12,4 +12,5 @@ module.exports = {
   forbiddenErrorMessage: 'Вы можете удалять только свои фильмы.',
   conflictErrorMessage: 'Пользователь с таким email уже существует.',
   serverErrorMessage: 'Произошла ошибка в работе сервера.',
+  limitErrorMessage: 'Превышен лимит запросов по этому IP.',
 };

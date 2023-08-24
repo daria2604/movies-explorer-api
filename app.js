@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const limiter = require('./middlewares/limiter');
 const users = require('./routes/users');
 const movies = require('./routes/movies');
 const { createUser, signin, signout } = require('./controllers/users');
@@ -20,6 +21,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
+app.use(limiter);
 
 app.post('/signin', signInValidation, signin);
 app.post('/signup', signUpValidation, createUser);
