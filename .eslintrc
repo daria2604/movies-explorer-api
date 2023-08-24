@@ -17,7 +17,6 @@
         "ignoreRestSiblings": false
         }
     ],
-    "func-names": "off",
-    "consistent-return": "off"
+    "func-names": "off"
   }
 }
