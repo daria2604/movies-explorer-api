@@ -9,13 +9,13 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 const router = require('./routes/index');
 const error = require('./middlewares/error');
-const allowedCors = require('./utils/allowedCors');
+const { ALLOWED_CORS, DB_URL } = require('./utils/constants');
 
-const { PORT, DB_URL } = process.env;
+const { PORT } = process.env;
 
 const app = express();
 
-app.use(cors({ origin: allowedCors, credentials: true }));
+app.use(cors({ origin: ALLOWED_CORS, credentials: true }));
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
