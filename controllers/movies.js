@@ -4,7 +4,7 @@ const {
   movieCreateValidationErrorMessage,
   movieNotFoundErrorMessage,
   forbiddenErrorMessage,
-  movieBadRequestErrorMessage,
+  movieDeleteErrorMessage,
 } = require('../errors/messages');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
@@ -46,7 +46,7 @@ const deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError(movieBadRequestErrorMessage));
+        next(new BadRequestError(movieDeleteErrorMessage));
       } else {
         next(err);
       }
