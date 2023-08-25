@@ -9,9 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const limiter = require('./middlewares/limiter');
 const router = require('./routes/index');
 const error = require('./middlewares/error');
-const { ALLOWED_CORS, DB_URL } = require('./utils/constants');
-
-const { PORT } = process.env;
+const { ALLOWED_CORS, PORT, DB_URL } = require('./utils/constants');
 
 const app = express();
 
