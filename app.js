@@ -19,6 +19,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
 app.use(limiter);
+app.set('trust proxy', 1);
+app.get('/x-forwarded-for', (req, res) => res.send(req.headers['x-forwarded-for']));
 
 app.use(router);
 
