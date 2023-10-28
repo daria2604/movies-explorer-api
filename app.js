@@ -22,9 +22,24 @@ app.use(limiter);
 
 app.use(router);
 
-mongoose.connect(DB_URL);
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(DB_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+};
 
 app.use(errorLogger);
 app.use(errors());
 app.use(error);
-app.listen(PORT);
+
+app.all('*', (req, res) => {
+  res.json({ 'every thing': 'is awesome' });
+});
+
+connectDB().then(() => {
+  app.listen(PORT);
+});
